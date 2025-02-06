@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:helpers="clr-namespace:PdfForms.Helpers"
+    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:controls="clr-namespace:PdfForms.Controls"
+    xmlns:datasource="clr-namespace:PdfForms.Models"
+    xmlns:vm="clr-namespace:PdfForms.ViewModels"
+    x:Class="PdfForms.Views.HomePage"
+    x:DataType="vm:HomeViewModel"
+    Title="Home">
+
+    <ContentPage.Behaviors>
+        <mct:EventToCommandBehavior
+            EventName="Appearing"
+            Command="{Binding AppearingCommand}"/>
+    </ContentPage.Behaviors>
+
+    <ScrollView>
+        <VerticalStackLayout 
+        Padding="15"
+        Spacing="8">
+            <Label Text="Form Name" FontAttributes="Bold"/>
+            <controls:ComboBox
+                IsVisible="{Binding EnableDelete}"
+                ItemSource="{Binding Forms}"
+                SelectedItem="{Binding SelectedForm}"
+                DisplayMember="FormName">
+                <controls:ComboBox.ItemTemplate>
+                    <DataTemplate x:DataType="datasource:Form" >
+                        <Label Text="{Binding FormName}"/>
+                    </DataTemplate>
+                </controls:ComboBox.ItemTemplate>
+            </controls:ComboBox>
+            <Entry
+                x:Name="NameEntry"
+                Text="{Binding SelectedForm.FormName}"
+                IsVisible="{Binding IsEnabled}"
+                FontSize="18"
+                MinimumWidthRequest="150"
+                HorizontalOptions="StartAndExpand">
+                <Entry.Behaviors>
+                    <mct:SelectAllTextBehavior/>
+                </Entry.Behaviors>
+            </Entry>
+            <HorizontalStackLayout Spacing="5">
+                <Button
+                    Text="{Binding EditSaveButtonText}"
+                    IsEnabled="{Binding EnableEdit}"
+                    Command="{Binding EditSaveCommand}"
+                    CommandParameter="{Reference NameEntry}">
+                    <Button.ImageSource>
+                        <FontImageSource 
+                        FontFamily="free-solid-900"
+                        Glyph="{Binding EditSaveImage}" 
+                        Size="25"/>
+                    </Button.ImageSource>
+                </Button>
+                <Button
+                    Text="{Binding AddCancelButtonText}"
+                    Command="{Binding AddCancelCommand}"
+                    CommandParameter="{Reference NameEntry}">
+                    <Button.ImageSource>
+                        <FontImageSource 
+                            FontFamily="free-solid-900"
+                            Glyph="{Binding AddCancelImage}" 
+                            Size="25"/>
+                    </Button.ImageSource>
+                </Button>
+                <Button
+                    Text="Delete"
+                    IsEnabled="{Binding EnableDelete}"
+                    Command="{Binding DeleteCommand}">
+                    <Button.ImageSource>
+                        <FontImageSource 
+                        FontFamily="free-solid-900"
+                        Glyph="{x:Static helpers:FontAwesomeHelper.TrashCan}" 
+                        Size="25"/>
+                    </Button.ImageSource>
+                </Button>
+            </HorizontalStackLayout>
+            <Button
+                Text="Form Editor"
+                IsEnabled="{Binding EnableDelete}"
+                Command="{Binding  OpenSourceFormCommand}">
+                <Button.ImageSource>
+                    <FontImageSource 
+                        FontFamily="free-solid-900"
+                        Glyph="{x:Static helpers:FontAwesomeHelper.FilePdf}" 
+                        Size="25"/>
+                </Button.ImageSource>
+            </Button>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

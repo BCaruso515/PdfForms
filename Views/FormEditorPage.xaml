@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:helpers="clr-namespace:PdfForms.Helpers"
+    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:controls="clr-namespace:PdfForms.Controls"
+    xmlns:datasource="clr-namespace:PdfForms.Models"
+    xmlns:vm="clr-namespace:PdfForms.ViewModels"
+    x:Class="PdfForms.Views.FormEditorPage"
+    x:DataType="vm:FormEditorViewModel"
+    Title="Pdf Form Field Editor">
+    
+    <ScrollView>
+        <VerticalStackLayout 
+            Padding="15" 
+            Spacing="8">
+            
+            <Label Text="Field Name" FontAttributes="Bold"/>
+            <controls:ComboBox
+                ItemSource="{Binding Fields}"
+                DisplayMember="FieldName"
+                SelectedItem="{Binding SelectedField}"
+                IsVisible="{Binding EnableDelete}">
+                <controls:ComboBox.ItemTemplate>
+                    <DataTemplate x:DataType="datasource:Field" >
+                        <Label Text="{Binding FieldName}"/>
+                    </DataTemplate>
+                </controls:ComboBox.ItemTemplate>
+            </controls:ComboBox>
+            <Entry
+                x:Name="FieldName"
+                Placeholder="Field Name"
+                Text="{Binding SelectedField.FieldName}"
+                HorizontalOptions="FillAndExpand"  
+                IsVisible="{Binding IsEnabled}">
+                <Entry.Behaviors>
+                    <mct:SelectAllTextBehavior/>
+                </Entry.Behaviors>
+            </Entry>
+            <Label Text="Distance from left"/>
+            <Entry
+                Placeholder="Distance from left"
+                Text="{Binding SelectedField.Left}"
+                HorizontalOptions="FillAndExpand" 
+                IsEnabled="{Binding IsEnabled}">
+                <Entry.Behaviors>
+                    <mct:SelectAllTextBehavior/>
+                    <mct:NumericValidationBehavior/>
+                </Entry.Behaviors>
+            </Entry>
+            <Label Text="Distance from bottom"/>
+            <Entry
+                Placeholder="Distance from bottom"
+                Text="{Binding SelectedField.Bottom}"
+                HorizontalOptions="FillAndExpand" 
+                IsEnabled="{Binding IsEnabled}">
+                <Entry.Behaviors>
+                    <mct:SelectAllTextBehavior/>
+                    <mct:NumericValidationBehavior/>
+                </Entry.Behaviors>
+            </Entry>
+            <Label Text="Width"/>
+            <Entry
+                Placeholder="Width"
+                Text="{Binding SelectedField.Width}"
+                HorizontalOptions="FillAndExpand" 
+                IsEnabled="{Binding IsEnabled}">
+                <Entry.Behaviors>
+                    <mct:SelectAllTextBehavior/>
+                    <mct:NumericValidationBehavior/>
+                </Entry.Behaviors>
+            </Entry>
+            <Label Text="Height"/>
+            <Entry
+                Placeholder="Height"
+                Text="{Binding SelectedField.Height}"
+                HorizontalOptions="FillAndExpand" 
+                IsEnabled="{Binding IsEnabled}">
+                <Entry.Behaviors>
+                    <mct:SelectAllTextBehavior/>
+                    <mct:NumericValidationBehavior/>
+                </Entry.Behaviors>
+            </Entry>
+            <Label Text="Page Number"/>
+            <Entry
+                Placeholder="Page Number"
+                Text="{Binding SelectedField.PageNumber}"
+                HorizontalOptions="FillAndExpand" 
+                IsEnabled="{Binding IsEnabled}">
+                <Entry.Behaviors>
+                    <mct:SelectAllTextBehavior/>
+                    <mct:NumericValidationBehavior/>
+                </Entry.Behaviors>
+            </Entry>
+            <Label Text="Tab Index"/>
+            <Entry
+                Placeholder="Tab Index"
+                Text="{Binding SelectedField.TabIndex}"
+                HorizontalOptions="FillAndExpand" 
+                IsEnabled="{Binding IsEnabled}">
+                <Entry.Behaviors>
+                    <mct:SelectAllTextBehavior/>
+                    <mct:NumericValidationBehavior/>
+                </Entry.Behaviors>
+            </Entry>
+            <Label Text="Field Type"/>
+            <controls:ComboBox
+                IsEnabled="{Binding IsEnabled}"
+                ItemSource="{Binding FieldTypes}"
+                SelectedItem="{Binding SelectedType}"
+                DisplayMember="TypeName">
+                <controls:ComboBox.ItemTemplate>
+                    <DataTemplate x:DataType="datasource:FieldType" >
+                        <Label Text="{Binding TypeName}"/>
+                    </DataTemplate>
+                </controls:ComboBox.ItemTemplate>
+            </controls:ComboBox>
+            <HorizontalStackLayout Spacing="5" IsVisible="{Binding IsCheckField}">
+                <Label Text="Is Checked" VerticalOptions="Center"/>
+                <CheckBox 
+                    IsChecked="{Binding IsChecked}"
+                    IsEnabled="{Binding IsEnabled}"/>
+            </HorizontalStackLayout>
+            <Entry
+                Placeholder="Text to be displayed"
+                Text="{Binding SelectedField.FieldValue}"
+                HorizontalOptions="FillAndExpand" 
+                IsVisible="{Binding IsTextField}"
+                IsEnabled="{Binding IsEnabled}">
+                <Entry.Behaviors>
+                    <mct:SelectAllTextBehavior/>
+                </Entry.Behaviors>
+            </Entry>
+
+            <HorizontalStackLayout Spacing="5">
+                <Button
+                    Text="{Binding EditSaveButtonText}"
+                    IsEnabled="{Binding EnableEdit}"
+                    Command="{Binding EditSaveCommand}"
+                    CommandParameter="{Reference FieldName}">
+                    <Button.ImageSource>
+                        <FontImageSource 
+                            FontFamily="free-solid-900"
+                            Glyph="{Binding EditSaveImage}" 
+                            Size="25"/>
+                    </Button.ImageSource>
+                </Button>
+                <Button
+                    Text="{Binding AddCancelButtonText}"
+                    Command="{Binding AddCancelCommand}"
+                    CommandParameter="{Reference FieldName}">
+                    <Button.ImageSource>
+                        <FontImageSource 
+                                FontFamily="free-solid-900"
+                                Glyph="{Binding AddCancelImage}" 
+                                Size="25"/>
+                    </Button.ImageSource>
+                </Button>
+                <Button
+                    Text="Delete"
+                    IsEnabled="{Binding EnableDelete}"
+                    Command="{Binding DeleteCommand}">
+                    <Button.ImageSource>
+                        <FontImageSource 
+                            FontFamily="free-solid-900"
+                            Glyph="{x:Static helpers:FontAwesomeHelper.TrashCan}" 
+                            Size="25"/>
+                    </Button.ImageSource>
+                </Button>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout Spacing="5">
+                <Button
+                    Text="Preview Form" 
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    HorizontalOptions="Center" 
+                    Command="{Binding GenerateFormCommand}"
+                    IsEnabled="{Binding EnableDelete}">
+                    <Button.ImageSource>
+                        <FontImageSource 
+                            FontFamily="free-solid-900"
+                            Glyph="{x:Static helpers:FontAwesomeHelper.MagnifyingGlass}" 
+                            Size="25"/>
+                    </Button.ImageSource>
+                </Button>
+                <Button
+                    Text="Export" 
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    HorizontalOptions="Center" 
+                    WidthRequest="210"
+                    Command="{Binding ExportCommand}"
+                    IsEnabled="{Binding EnableDelete}">
+                    <Button.ImageSource>
+                        <FontImageSource 
+                            FontFamily="free-solid-900"
+                            Glyph="{x:Static helpers:FontAwesomeHelper.Share}" 
+                            Size="25"/>
+                    </Button.ImageSource>
+                </Button>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

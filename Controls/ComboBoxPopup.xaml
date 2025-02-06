@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mct ="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+    x:Class="PdfForms.Controls.ComboBoxPopup"
+    Color="Transparent">
+
+    <Border 
+        Padding="25" 
+        MinimumHeightRequest="150" 
+        WidthRequest="400"
+        StrokeShape="RoundRectangle 25,0,0,25">
+        <CollectionView
+            SelectionMode="Single"
+            x:Name="cvResults"
+            VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+            SelectionChanged="ComboBoxPopup_SelectionChanged">
+        </CollectionView>
+    </Border>
+
+</mct:Popup>
