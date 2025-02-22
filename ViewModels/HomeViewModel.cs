@@ -18,7 +18,6 @@ namespace PdfForms.ViewModels
             Task.Run(async () =>
             {
                 await Initialize();
-                await Appearing();
             });
         }
 

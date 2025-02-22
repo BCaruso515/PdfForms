@@ -9,11 +9,13 @@
     xmlns:vm="clr-namespace:PdfForms.ViewModels"
     x:Class="PdfForms.Views.HomePage"
     x:DataType="vm:HomeViewModel"
+    x:Name="this"
     Title="Home">
 
     <ContentPage.Behaviors>
         <mct:EventToCommandBehavior
             EventName="Appearing"
+            BindingContext="{Binding Path=BindingContext, Source={x:Reference this}, x:DataType=Page}"
             Command="{Binding AppearingCommand}"/>
     </ContentPage.Behaviors>
 

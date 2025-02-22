@@ -31,6 +31,11 @@ namespace PdfForms.ViewModels
                 _selectedType = value;
                 IsCheckField = _selectedType.FieldTypeId == 1;
                 IsTextField = _selectedType.FieldTypeId == 3;
+                if (IsTextField && SelectedField.FieldValue == "Off" || SelectedField.FieldValue == "Yes")
+                {
+                    SelectedField.FieldValue = string.Empty;
+                    OnPropertyChanged(nameof(SelectedField));
+                }
                 OnPropertyChanged(nameof(SelectedType));
             }
         }
@@ -51,6 +56,7 @@ namespace PdfForms.ViewModels
             }
         }
 
+        [RelayCommand]
         public async Task Appearing()
         {
             

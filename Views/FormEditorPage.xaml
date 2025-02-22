@@ -9,7 +9,15 @@
     xmlns:vm="clr-namespace:PdfForms.ViewModels"
     x:Class="PdfForms.Views.FormEditorPage"
     x:DataType="vm:FormEditorViewModel"
+    x:Name="this"
     Title="Pdf Form Field Editor">
+
+    <ContentPage.Behaviors>
+        <mct:EventToCommandBehavior
+            EventName="Appearing"
+            BindingContext="{Binding Path=BindingContext, Source={x:Reference this}, x:DataType=Page}"
+            Command="{Binding AppearingCommand}"/>
+    </ContentPage.Behaviors>
     
     <ScrollView>
         <VerticalStackLayout 
