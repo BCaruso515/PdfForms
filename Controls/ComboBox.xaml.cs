@@ -34,8 +34,15 @@ public partial class ComboBox : ContentView
 
         if (newValue != null)
         {
-            if (!string.IsNullOrWhiteSpace(controls.DisplayMember))
-                controls.displayLabel.Text = newValue.GetType().GetProperty(controls.DisplayMember).GetValue(newValue, null).ToString();
+            var propertyInfo = newValue.GetType().GetProperty(controls.DisplayMember);
+            if (propertyInfo != null)
+            {
+                var value = propertyInfo.GetValue(newValue, null);
+                if (value != null)
+                {
+                    controls.displayLabel.Text = value.ToString();
+                }
+            }
         }
     }
 
